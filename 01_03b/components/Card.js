@@ -1,13 +1,13 @@
 const buildImage = (imgData) => {
-  let srcset = `${imgData.urls.full} ${imgData.width}w`;
-  if (imgData.urls.regular) {
-    srcset = srcset + `, ${imgData.urls.regular} 1080w`;
-  }
-  if (imgData.urls.small) {
-    srcset = srcset + `, ${imgData.urls.small} 400w`;
-  }
+	let srcset = `${imgData.urls.full} ${imgData.width}w`;
+	if (imgData.urls.regular) {
+		srcset = srcset + `, ${imgData.urls.regular} 1080w`;
+	}
+	if (imgData.urls.small) {
+		srcset = srcset + `, ${imgData.urls.small} 400w`;
+	}
 
-  const img = `
+	const img = `
     <img
           srcset="${srcset}"
           sizes="(max-width: 450px) 400px, (max-width: 800) 1080px"
@@ -18,23 +18,21 @@ const buildImage = (imgData) => {
           loading="lazy"
         />
     `;
-  return img;
+	return img;
 };
 
 const getDate = (imgData) => {
-  const date = new Date(imgData.created_at);
-  const niceDate = date.toLocaleString("default", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-  return niceDate;
+	const date = new Date(imgData.created_at);
+	const niceDate = date.toLocaleString("default", {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	});
+	return niceDate;
 };
 
-const Card = (data) => {
-  const imgData = data[0];
-
-  return `
+const Card = (imgData) => {
+	return `
     <figure class="image">
       ${buildImage(imgData)}
       <figcaption class="image__caption">
@@ -46,8 +44,8 @@ const Card = (data) => {
           </p>
           <p>
             Uploaded on <time class="image__date" datetime="${
-              imgData.created_at
-            }">${getDate(imgData)}</time>.
+							imgData.created_at
+						}">${getDate(imgData)}</time>.
           </p>
           <p>
             <a href="${imgData.links.self}" class="image__link">

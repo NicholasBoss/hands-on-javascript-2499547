@@ -9,12 +9,12 @@ import Cardlist from "./components/Cardlist.js";
 
 // Add license info to each data object.
 const license = {
-  license: "Unsplash License",
-  license_uri: "https://unsplash.com/license",
+	license: "Unsplash License",
+	license_uri: "https://unsplash.com/license",
 };
 const newData = data.map((imgData) => {
-  const newImgData = { ...imgData, ...license };
-  return newImgData;
+	const newImgData = { ...imgData, ...license };
+	return newImgData;
 });
 
 const mainContent = document.querySelector(".main-content");
@@ -29,28 +29,39 @@ const toggle = document.querySelector(".toggle");
 
 // Detect mode on load and set toggle state accordingly.
 const displayModeOnLoad = () => {
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
-    docElement.classList.add("dark");
-    toggle.setAttribute("aria-pressed", "true");
-  } else {
-    docElement.classList.add("light");
-    toggle.removeAttribute("aria-pressed");
-  }
+	console.log(localStorage.getItem("darkMode"));
+
+	let dark = false;
+	dark = !!(
+		window.matchMedia &&
+		window.matchMedia("(prefers-color-scheme: dark)").matches
+	);
+	dark = localStorage.getItem("darkMode") === "enabled";
+
+	if (dark) {
+		docElement.classList.add("dark");
+		toggle.setAttribute("aria-pressed", "true");
+		localStorage.setItem("darkMode", "enabled");
+	} else {
+		docElement.classList.add("light");
+		toggle.removeAttribute("aria-pressed");
+		localStorage.setItem("darkMode", "disabled");
+	}
 };
 displayModeOnLoad();
 
 // Trigger mode change with toggle.
 const toggleDisplayMode = () => {
-  if (toggle.getAttribute("aria-pressed") === "true") {
-    toggle.removeAttribute("aria-pressed");
-  } else {
-    toggle.setAttribute("aria-pressed", "true");
-  }
+	if (toggle.getAttribute("aria-pressed") === "true") {
+		toggle.removeAttribute("aria-pressed");
+		localStorage.setItem("darkMode", "disabled");
+	} else {
+		toggle.setAttribute("aria-pressed", "true");
+		localStorage.setItem("darkMode", "enabled");
+	}
 
-  docElement.classList.toggle("dark");
-  docElement.classList.toggle("light");
+	console.log(localStorage.getItem("darkMode"));
+	docElement.classList.toggle("dark");
+	docElement.classList.toggle("light");
 };
 toggle.addEventListener("click", () => toggleDisplayMode());

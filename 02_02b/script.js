@@ -10,12 +10,12 @@ import Cardlist from "./components/Cardlist.js";
 
 // Add license info to each data object.
 const license = {
-  license: "Unsplash License",
-  license_uri: "https://unsplash.com/license",
+	license: "Unsplash License",
+	license_uri: "https://unsplash.com/license",
 };
 const newData = data.map((imgData) => {
-  const newImgData = { ...imgData, ...license };
-  return newImgData;
+	const newImgData = { ...imgData, ...license };
+	return newImgData;
 });
 
 const mainContent = document.querySelector(".main-content");
@@ -26,13 +26,17 @@ mainContent.innerHTML = Cardlist(newData);
  * Light/dark mode feature.
  */
 const toggle = document.querySelector(".toggle");
+const docElement = document.documentElement;
 
 // Trigger mode change with toggle.
 const toggleDisplayMode = () => {
-  if (toggle.getAttribute("aria-pressed") === "true") {
-    toggle.removeAttribute("aria-pressed");
-  } else {
-    toggle.setAttribute("aria-pressed", "true");
-  }
+	if (toggle.getAttribute("aria-pressed") === "true") {
+		toggle.removeAttribute("aria-pressed");
+	} else {
+		toggle.setAttribute("aria-pressed", "true");
+	}
+
+	docElement.classList.toggle("dark");
+	docElement.classList.toggle("light");
 };
 toggle.addEventListener("click", () => toggleDisplayMode());
